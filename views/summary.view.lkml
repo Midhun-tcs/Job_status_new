@@ -159,6 +159,7 @@ view: summary {
 
   dimension: unusal_activty {
     type: string
+    hidden: yes
     sql: ${TABLE}.Unusal_activity ;;
   }
 
