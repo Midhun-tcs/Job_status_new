@@ -26,16 +26,14 @@ view: summary {
     sql: ${TABLE}.Failed_in_Last_7_days ;;
   }
 
-  dimension: job_fail {
-    type: duration_day
-    hidden: yes
-    sql_start: ${detail.failed_on_time} ;;
-    sql_end: CURRENT_TIMESTAMP();;
+  dimension: date_diff {
+    type: number
+    sql: DATE_DIFF(CURRENT_DATE(),${detail.failed_on_date},day) ;;
   }
 
   dimension: failed_in_last_7_days {
     type: string
-    sql: case when ${job_fail}<7 then 'Yes' else 'No' end ;;
+    sql: case when ${date_diff}<7 then 'Yes' else 'No' end ;;
   }
 
   dimension: file_name {
@@ -119,13 +117,7 @@ view: summary {
 
   dimension: sla_met {
     type: string
-    sql: case when ${run_time}<${static.sla_time} then 'SLA Met' else 'SLA Not Met' end ;;
-  }
-
-  dimension: length_in_minutes {
-    type: number
-    sql: TIME_DIFF(${run_time},${static.sla_time}) ;;
-    group_label: "SLA Met"
+    sql: case when ${run_raw}<${static.sla_raw} then 'SLA Met' else 'SLA Not Met' end ;;
   }
 
   dimension_group: start {
@@ -141,6 +133,7 @@ view: summary {
     ]
     sql: ${TABLE}.Start_Time ;;
   }
+
 
   dimension: status {
     type: string
@@ -166,7 +159,7 @@ view: summary {
   dimension: unusal_activity {
     type: string
     sql: case when ${rows_processed}>${static.rows_processed_threshold} then 'Y'
-          when ${start_time}>${static.usual_start_time} then 'Y'
+          when ${start_raw}>${static.usual_start_time} then 'Y'
           else 'N' end;;
   }
 
