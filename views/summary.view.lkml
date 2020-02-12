@@ -165,6 +165,6 @@ view: summary {
 
   measure: count {
     type: count
-    drill_fields: [job_name, server_name, file_name]
+    drill_fields: [job_name, server_name, application,project,type,job_type]
   }
 }
