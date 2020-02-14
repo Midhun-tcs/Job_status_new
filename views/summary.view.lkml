@@ -28,7 +28,7 @@ view: summary {
 
   dimension: date_diff {
     type: number
-    sql: DATE_DIFF(CURRENT_DATE(),${detail.failed_on_date},day) ;;
+    sql: DATE_DIFF(${start_date},${detail.failed_on_date},day) ;;
   }
 
   dimension: failed_in_last_7_days {
