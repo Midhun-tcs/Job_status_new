@@ -5,7 +5,7 @@ include: "/views/**/*.view"
 
 datagroup: job_status_new_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
-  max_cache_age: "1 hour"
+  max_cache_age: "1 minute"
 }
 
 persist_with: job_status_new_default_datagroup
